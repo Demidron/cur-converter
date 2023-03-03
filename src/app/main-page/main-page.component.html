@@ -1,0 +1,42 @@
+<div class="container con-card">
+
+    <nav class="navbar navbar-expand navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Currency Converter
+                <i class="bi bi-currency-exchange"></i>
+            </a>
+            <div class="d-flex">
+                <a *ngFor="let c of pbManager.actualCursesMas" class="navbar-brand">
+                    {{curSymbols[c.code]}} {{c.sale + ' / ' + c.buy}}
+                </a>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="card text-center">
+        <form class="px-4 py-4 " [formGroup]="form">
+            <h2 class="mb-3">Convert currency:</h2>
+            <div formArrayName="courses" *ngFor="let course of courses.controls; index as i; last as isLast">
+                <div [formGroupName]="i" class=" input-group mb-3 col-sm">
+                    <span class="input-group-text symbolInput">{{curSymbols[course.value.selectedCode]}}</span>
+
+                    <input formControlName="valueCur" (focus)="inputChange(i)" id="valueCur-{{ i }}" type="text"
+                        class="form-control" placeholder="Input {{course.value.selectedCode}}">
+                    <select formControlName="selectedCode" id="selectedCode-{{ i }}" class="form-select">
+                        <option *ngFor="let c of curs" [value]="c">
+                            {{c}}</option>
+                    </select>
+
+                    <button *ngIf="courses.controls.length>2" class="btn btn-outline-danger" type="button"
+                        (click)="delCurClick(i)"><i class="bi bi-x-lg"></i></button>
+                    <button *ngIf="!isLast" class="btn btn-outline-dark" type="button" (click)="spinCurClick(i)"><i
+                            class="bi bi-arrow-left-right"></i></button>
+                    <button *ngIf="isLast" class="btn btn-outline-success" type="button" (click)="addCurClick(i)"><i
+                            class="bi bi-plus"></i></button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
